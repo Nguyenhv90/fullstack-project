@@ -1,0 +1,10 @@
+/*/*/target
+/*/.iml
+/*/*/mvnw
+/*/*/.mvn/wrapper
+/*/*/mvnw.cmd
+/*/*/HELP.md
+/*/*/*.iml
+/*/*/.vscode
+/fontend/angular-ecommerce/package-lock.json
+/fontend/angular-ecommerce/*.editorconfig
