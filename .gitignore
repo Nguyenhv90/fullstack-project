@@ -1,8 +1,5 @@
 /.idea
 /*/target
 /.iml
-/*/mvnw
-/*/.mvn/wrapper
-/*/mvnw.cmd
 /*/HELP.md
 /*/*.iml
