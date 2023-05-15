@@ -1,7 +1,7 @@
 package com.hvn.supportpotal.service.impl;
 
-import com.hvn.supportpotal.domain.User;
-import com.hvn.supportpotal.domain.UserPrincipal;
+import com.hvn.supportpotal.model.User;
+import com.hvn.supportpotal.model.UserPrincipal;
 import com.hvn.supportpotal.repository.UserRepository;
 import com.hvn.supportpotal.service.UserService;
 import lombok.RequiredArgsConstructor;

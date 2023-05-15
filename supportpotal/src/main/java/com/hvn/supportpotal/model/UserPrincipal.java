@@ -1,4 +1,4 @@
-package com.hvn.supportpotal.domain;
+package com.hvn.supportpotal.model;
 
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
