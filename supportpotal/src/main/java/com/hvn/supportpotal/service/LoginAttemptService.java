@@ -3,6 +3,8 @@ package com.hvn.supportpotal.service;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
+import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.concurrent.ExecutionException;
@@ -14,6 +16,8 @@ public class LoginAttemptService {
     private static final int MAXIMUM_NUMBER_OF_ATTEMPTS = 5;
     private static final int ATTEMPT_INCREMENT = 1;
     private LoadingCache<String, Integer> loginAttemptCache;
+    @Autowired
+    private HttpServletRequest request;
 
     public LoginAttemptService() {
         super();
@@ -30,13 +34,30 @@ public class LoginAttemptService {
         loginAttemptCache.invalidate(username);
     }
 
-    public void addUserToLoginAttemptCache(String username) throws ExecutionException {
+    public void addUserToLoginAttemptCache(String username){
         int attempts = 0;
-        attempts = ATTEMPT_INCREMENT + loginAttemptCache.get(username);
+        try {
+            attempts = ATTEMPT_INCREMENT + loginAttemptCache.get(username);
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
         loginAttemptCache.put(username, attempts);
     }
 
-    public boolean hasExceededMaxAttempts (String username) throws ExecutionException {
-        return loginAttemptCache.get(username) >=MAXIMUM_NUMBER_OF_ATTEMPTS;
+    public boolean hasExceededMaxAttempts (String username) {
+        try {
+            return loginAttemptCache.get(username) >=MAXIMUM_NUMBER_OF_ATTEMPTS || loginAttemptCache.get(getClientIP()) >=MAXIMUM_NUMBER_OF_ATTEMPTS;
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+
+    private String getClientIP() {
+        final String xfHeader = request.getHeader("X-Forwarded-For");
+        if (xfHeader != null) {
+            return xfHeader.split(",")[0];
+        }
+        return request.getRemoteAddr();
     }
 }
