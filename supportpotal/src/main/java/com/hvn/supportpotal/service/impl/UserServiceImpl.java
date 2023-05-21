@@ -27,7 +27,6 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import javax.mail.MessagingException;
-import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -71,11 +70,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 
     private void validateLoginAttempt(User user){
         if (user.isNotLocked()) {
-            if (loginAttemptService.hasExceededMaxAttempts(user.getUsername())) {
-                user.setNotLocked(false);
-            } else {
-                user.setNotLocked(true);
-            }
+            user.setNotLocked(!loginAttemptService.hasExceededMaxAttempts(user.getUsername()));
         } else {
             loginAttemptService.evictUserFromLoginAttemptCache(user.getUsername());
         }
@@ -104,7 +99,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         userRepository.save(user);
         userDto.setPassword(password);
         String content = String.format(CONTENT_NEW_PASSWORD, userDto.getEmail(), password);
-        emailService.sendNewEmail(userDto.getEmail(), content);
+        emailService.sendNewEmail(userDto.getEmail(), content, SUBJECT_NEW_PASSWORD);
         LOGGER.info("New user password: " + password);
         return user;
     }
@@ -237,7 +232,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
         String password = generatePassword();
         user.setPassword(encodePassword(password));
         userRepository.save(user);
-        emailService.sendNewEmail(email, CONTENT_RESET_PASSWORD);
+        emailService.sendNewEmail(email, CONTENT_RESET_PASSWORD, SUBJECT_RESET_PASSWORD);
     }
 
     @Override

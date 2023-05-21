@@ -16,18 +16,18 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;
-
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static com.hvn.supportpotal.constant.CommonConstant.FORWARD_SLASH;
-import static com.hvn.supportpotal.constant.CommonConstant.USER_FOLDER;
-import static com.hvn.supportpotal.constant.SecurityConstant.*;
+import static com.hvn.supportpotal.constant.CommonConstant.*;
+import static com.hvn.supportpotal.constant.SecurityConstant.JWT_TOKEN_HEADER;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
 
@@ -57,7 +57,7 @@ public class UserController extends ExceptionHandling {
     }
 
     @PostMapping("/saveOrUpdate")
-    public ResponseEntity<User> saveOrUpdate(@RequestBody UserDto userDto)
+    public ResponseEntity<User> addOrUpdateUser(@RequestBody UserDto userDto)
             throws EmailExistException, UsernameExistException, IOException {
         User user = userService.addOrUpdateUser(userDto);
         return new ResponseEntity<>(user, OK);
@@ -96,9 +96,23 @@ public class UserController extends ExceptionHandling {
         return new ResponseEntity<>(user, OK);
     }
 
-    @GetMapping(path = "/iamge/{username}/{filename}", produces = IMAGE_JPEG_VALUE)
+    @GetMapping(path = "/image/{username}/{filename}", produces = IMAGE_JPEG_VALUE)
     public byte[] getProfileImage(@PathVariable("username") String username, @PathVariable("filename") String filename) throws IOException {
         return Files.readAllBytes(Paths.get(USER_FOLDER + username + FORWARD_SLASH + filename));
+    }
+
+    @GetMapping(path = "/image/profile/{username}", produces = IMAGE_JPEG_VALUE)
+    public byte[] getTempProfileImage(@PathVariable("username") String username) throws IOException {
+        URL url = new URL(TEMP_PROFILE_IMAGE_BASE_URL + username);
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        try(InputStream inputStream = url.openStream()) {
+            int bytesRead;
+            byte[] chuck = new  byte[1024];
+            while ((bytesRead = inputStream.read(chuck)) > 0) {
+                byteArrayOutputStream.write(chuck, 0, bytesRead);
+            }
+        }
+        return byteArrayOutputStream.toByteArray();
     }
 
     private HttpHeaders getJwtHeader(UserPrincipal userPrincipal) {

@@ -17,7 +17,7 @@ public class CommonConstant {
     public static final String PASSWORD = "tfzabxbwjkjphsky";
     public static final String FROM_EMAIL = "nguyenhv236@gmail.com";
     public static final String CC_EMAIL = "";
-    public static final String EMAIL_SUBJECT = "HN server - New Password";
+    public static final String EMAIL_SUBJECT = "HN server - ";
     public static final String GMAIL_SMTP_SERVER = "smtp.gmail.com";
     public static final String SMTP_HOST = "mail.smtp.host";
     public static final String SMTP_AUTH = "mail.smtp.auth";
@@ -28,6 +28,8 @@ public class CommonConstant {
     /* ----->>>  Constant for Email END <<<-----*/
 
     /* ----->>>  Content for mail START <<<-----*/
+    public static final String SUBJECT_NEW_PASSWORD = "New password";
+    public static final String SUBJECT_RESET_PASSWORD = "Reset Password";
     public static final String CONTENT_NEW_PASSWORD = "Hello %s \n \n Your new account password is: %s \n \n The Support Team";
     public static final String CONTENT_RESET_PASSWORD = "Hello %s \n \n Your password has been reset. Please don't share it: %s \n \n The Support Team";
     /* ----->>>  Content for mail END <<<-----*/
