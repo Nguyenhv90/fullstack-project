@@ -16,7 +16,6 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;
 
@@ -25,8 +24,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.List;
 
-import static com.hvn.supportpotal.constant.CommonConstant.FORWARD_SLASH;
-import static com.hvn.supportpotal.constant.CommonConstant.USER_FOLDER;
+import static com.hvn.supportpotal.constant.CommonConstant.*;
 import static com.hvn.supportpotal.constant.SecurityConstant.*;
 import static org.springframework.http.HttpStatus.OK;
 import static org.springframework.http.MediaType.IMAGE_JPEG_VALUE;
