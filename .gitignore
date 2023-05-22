@@ -9,7 +9,8 @@
 
 
 # font end
-/*/.vscode/*
+/*/.angular
+/*/.vscode
 /*/dist
 /*/tmp
 /*/out-tsc
