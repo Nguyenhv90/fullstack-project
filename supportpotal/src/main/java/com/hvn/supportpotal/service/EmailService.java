@@ -1,6 +1,5 @@
 package com.hvn.supportpotal.service;
 
-import com.hvn.supportpotal.dto.UserDto;
 import com.sun.mail.smtp.SMTPTransport;
 import org.springframework.stereotype.Service;
 
@@ -19,20 +18,20 @@ import static javax.mail.Message.RecipientType.TO;
 @Service
 public class EmailService {
 
-    public void sendNewEmail(String email, String content) throws MessagingException {
-        Message message = createEmail(email, content);
+    public void sendNewEmail(String email, String content, String subject) throws MessagingException {
+        Message message = createEmail(email, content, subject);
         SMTPTransport smtpTransport = (SMTPTransport) getEmailSession().getTransport(SIMPLE_EMAIL_TRANSFER_PROTOCOL);
         smtpTransport.connect(GMAIL_SMTP_SERVER, USERNAME, PASSWORD);
         smtpTransport.sendMessage(message, message.getAllRecipients());
         smtpTransport.close();
     }
 
-    private Message createEmail(String email, String content) throws MessagingException {
+    private Message createEmail(String email, String content, String subject) throws MessagingException {
         Message message = new MimeMessage(getEmailSession());
         message.setFrom(new InternetAddress(FROM_EMAIL));
         message.setRecipients(TO, InternetAddress.parse(email, false));
         message.setRecipients(CC, InternetAddress.parse(CC_EMAIL, false));
-        message.setSubject(EMAIL_SUBJECT);
+        message.setSubject(EMAIL_SUBJECT + subject);
         message.setText(content);
         message.setSentDate(new Date());
         message.saveChanges();
