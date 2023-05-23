@@ -94,7 +94,7 @@ public class UserController extends ExceptionHandling {
         return new ResponseEntity<>(user, OK);
     }
 
-    @GetMapping(path = "/iamge/{username}/{filename}", produces = IMAGE_JPEG_VALUE)
+    @GetMapping(path = "/image/{username}/{filename}", produces = IMAGE_JPEG_VALUE)
     public byte[] getProfileImage(@PathVariable("username") String username, @PathVariable("filename") String filename) throws IOException {
         return Files.readAllBytes(Paths.get(USER_FOLDER + username + FORWARD_SLASH + filename));
     }
