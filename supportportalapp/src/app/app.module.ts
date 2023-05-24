@@ -7,18 +7,27 @@ import { AppComponent } from './app.component';
 import { AuthenticationService } from './service/authentication.service';
 import { UserService } from './service/user.service';
 import { AuthInterceptor } from './interceptor/auth.interceptor';
-import { AuthGuard, PermissionService } from './service/permission.service';
+import { PermissionService } from './service/permission.service';
+import { NotificationModule } from './notification.module';
+import { NotificationService } from './service/notification.service';
+import { LoginComponent } from './component/login/login.component';
+import { RegisterComponent } from './component/register/register.component';
+import { UserComponent } from './component/user/user.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    LoginComponent,
+    RegisterComponent,
+    UserComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    NotificationModule,
   ],
-  providers: [PermissionService, AuthenticationService, UserService, {provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi: true}],
+  providers: [NotificationService, PermissionService, AuthenticationService, UserService, {provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi: true}],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
