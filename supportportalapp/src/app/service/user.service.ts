@@ -11,8 +11,8 @@ export class UserService {
 
   constructor(private http: HttpClient) { }
 
-  public getUsers(): Observable<User[] | HttpErrorResponse> {
-    return this.http.get<User[]>(`${this.host}/user/list`)
+  public getUsers(): Observable<any> {
+    return this.http.get<User[]>(`${this.host}/user/search`,{})
   }
 
   public save(user: User): Observable<any> {

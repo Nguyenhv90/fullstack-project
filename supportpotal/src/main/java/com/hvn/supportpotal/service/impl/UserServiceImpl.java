@@ -105,7 +105,7 @@ public class UserServiceImpl implements UserService, UserDetailsService {
     }
 
     private String getTempFileImageUrl(String username) {
-        return ServletUriComponentsBuilder.fromCurrentContextPath().path(DEFAULT_USER_IMAGE_PATH + username).toUriString();
+        return TEMP_PROFILE_IMAGE_BASE_URL + username + TEMP_PROFILE_IMAGE_CAT_STYLE;
     }
 
     private String encodePassword(String password) {

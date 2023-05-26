@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Subscription, delay } from 'rxjs';
 import { NotificationType } from 'src/app/enum/notification-type.enum';
 import { User } from 'src/app/model/user';
 import { AuthenticationService } from 'src/app/service/authentication.service';
@@ -33,8 +33,8 @@ export class RegisterComponent implements OnInit, OnDestroy {
     this.showLoading = false;
     this.subscriptions.push(
       this.authService.register(user).subscribe(res => {
-          console.log(res);
-          this.notificationService.notify(NotificationType.SUCCESS, "Register success" )
+          this.notificationService.notify(NotificationType.SUCCESS, "Register success. Please check your email for password to login.");
+          delay(1000);
           this.router.navigateByUrl('/login');
           this.showLoading = false;
         },

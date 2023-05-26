@@ -68,8 +68,8 @@ public class UserController extends ExceptionHandling {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<User>> search(@RequestBody UserDto userDto) {
-        List<User> users = userService.findAll(userDto);
+    public ResponseEntity<List<User>> search() {
+        List<User> users = userService.findAll(new UserDto());
         return new ResponseEntity<>(users, OK);
     }
 
