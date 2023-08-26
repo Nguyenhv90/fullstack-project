@@ -1,10 +1,10 @@
-package com.hvn;
+package com.hvn.fullstackprofestional;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class SpringBootExampleApplicationTests {
+class FullstackProfestionalApplicationTests {
 
 	@Test
 	void contextLoads() {
